@@ -1,6 +1,6 @@
 package com.premier_league.backend.repository;
 
-import com.premierleague.backend.model.Player;
+import com.premier_league.backend.model.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
