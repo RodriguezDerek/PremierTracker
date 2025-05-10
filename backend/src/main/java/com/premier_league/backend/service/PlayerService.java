@@ -8,6 +8,7 @@ import com.premier_league.backend.model.Player;
 import com.premier_league.backend.repository.PlayerRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,32 +38,91 @@ public class PlayerService {
         throw new PlayerAlreadyExistsException("Player already exists");
     }
 
-    public GenericResponse updatePlayer(@Valid Player updatedPlayer) {
-        Optional<Player> optionalPlayer = playerRepository.findByName(updatedPlayer.getName());
+    public GenericResponse updatePlayer(@Valid Player updatedPlayer, @NotNull Long id) {
+        Optional<Player> optionalPlayer = playerRepository.findById(id);
         if(optionalPlayer.isPresent()){
-            //finish this later
+            Player player = optionalPlayer.get();
+            player.setName(updatedPlayer.getName());
+            player.setJerseyNumber(updatedPlayer.getJerseyNumber());
+            player.setTeam(updatedPlayer.getTeam());
+            player.setPosition(updatedPlayer.getPosition());
+            player.setNationality(updatedPlayer.getNationality());
+            player.setAge(updatedPlayer.getAge());
+            player.setWins(updatedPlayer.getWins());
+            player.setLosses(updatedPlayer.getLosses());
+            player.setGoals(updatedPlayer.getGoals());
+            player.setShots(updatedPlayer.getShots());
+            player.setShotsOnTarget(updatedPlayer.getShotsOnTarget());
+            player.setCleanSheets(updatedPlayer.getCleanSheets());
+            player.setAssists(updatedPlayer.getAssists());
+            player.setPasses(updatedPlayer.getPasses());
+            player.setSaves(updatedPlayer.getSaves());
+            player.setYellowCards(updatedPlayer.getYellowCards());
+            player.setRedCards(updatedPlayer.getRedCards());
+            player.setFouls(updatedPlayer.getFouls());
+            player.setOffsides(updatedPlayer.getOffsides());
+
+            playerRepository.save(player);
+
+            return GenericResponse
+                    .builder()
+                    .message("Player updated successfully")
+                    .status(HttpStatus.OK.value())
+                    .player(player)
+                    .build();
         }
 
         throw new PlayerNotFoundException("Player not found");
     }
 
-    public GenericResponse deletePlayer(@NotBlank String playerName) {
-        return null;
+    public GenericResponse deletePlayer(@NotNull Long id) {
+        Optional<Player> optionalPlayer = playerRepository.findById(id);
+        if(optionalPlayer.isPresent()){
+            playerRepository.delete(optionalPlayer.get());
+            return GenericResponse
+                    .builder()
+                    .message("Player deleted successfully")
+                    .status(HttpStatus.OK.value())
+                    .player(optionalPlayer.get())
+                    .build();
+        }
+
+        throw new PlayerNotFoundException("Player not found");
     }
 
     public PlayerResponse getAllPlayers() {
-        return null;
+        return PlayerResponse
+                .builder()
+                .category("All Players")
+                .status(HttpStatus.OK.value())
+                .playerList(playerRepository.findAll())
+                .build();
     }
 
     public PlayerResponse getPlayersByTeam(@NotBlank String team) {
-        return null;
+        return PlayerResponse
+                .builder()
+                .category("Team: " + team)
+                .status(HttpStatus.OK.value())
+                .playerList(playerRepository.findAllByTeamIgnoreCase(team))
+                .build();
     }
 
     public PlayerResponse getPlayersByNation(@NotBlank String nation) {
-        return null;
+        return PlayerResponse
+                .builder()
+                .category("Nation: " + nation)
+                .status(HttpStatus.OK.value())
+                .playerList(playerRepository.findAllByNationalityIgnoreCase(nation))
+                .build();
     }
 
     public PlayerResponse getPlayersByPosition(@NotBlank String position) {
-        return null;
+        return PlayerResponse
+                .builder()
+                .category("Position: " + position)
+                .status(HttpStatus.OK.value())
+                .playerList(playerRepository.findAllByPositionIgnoreCase(position))
+                .build();
     }
 }

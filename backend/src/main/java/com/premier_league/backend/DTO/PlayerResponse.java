@@ -14,6 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 public class PlayerResponse {
     private String category;
-    private String status;
+    private int status;
     private List<Player> playerList;
 }

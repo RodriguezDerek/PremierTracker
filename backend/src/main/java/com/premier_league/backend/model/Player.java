@@ -28,7 +28,7 @@ public class Player {
 
     @Column(name = "jersey_number", nullable = false)
     @NotNull(message = "Jersey number is required.")
-    @Min(value = 1, message = "Jersey number must be 1 or greater.")
+    @Min(value = 0, message = "Jersey number must be 0 or greater.")
     private Integer jerseyNumber = 0;
 
     @Column(name = "team", nullable = false)

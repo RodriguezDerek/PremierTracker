@@ -6,6 +6,7 @@ import com.premier_league.backend.model.Player;
 import com.premier_league.backend.service.PlayerService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,14 @@ public class PlayerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(playerService.addPlayer(player));
     }
 
-    @PutMapping("/players")
-    public ResponseEntity<GenericResponse> modifyPlayer(@Valid @RequestBody Player updatedPlayer){
-        return ResponseEntity.status(HttpStatus.OK).body(playerService.updatePlayer(updatedPlayer));
+    @PutMapping("/players/{id}")
+    public ResponseEntity<GenericResponse> modifyPlayer(@Valid @RequestBody Player updatedPlayer, @NotNull @PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(playerService.updatePlayer(updatedPlayer, id));
     }
 
-    @DeleteMapping("/players/{playerName}")
-    public ResponseEntity<GenericResponse> deletePlayer(@NotBlank @PathVariable String playerName){
-        return ResponseEntity.status(HttpStatus.OK).body(playerService.deletePlayer(playerName));
+    @DeleteMapping("/players/{id}")
+    public ResponseEntity<GenericResponse> deletePlayer(@NotNull @PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(playerService.deletePlayer(id));
     }
 
     @GetMapping("/players")
