@@ -4,3 +4,125 @@
 .custom-bg {
  background-color: #0D0226;
 }
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  padding-bottom: 4px;
+  transition: color 0.25s ease-in-out;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #E20BB3, #7C0662);
+  border-radius: 0;
+  transition: width 0.25s ease-in-out, border-radius 0.25s ease-in-out;
+}
+
+.nav-link:hover::before {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.btn-border {
+  border: 2px solid transparent;
+  border-image: linear-gradient(90deg, #E20BB3, #7C0662);
+  border-image-slice: 1;
+  padding: 10px 20px;
+  background-color: #0D0226;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 
+    background-color 0.4s ease, 
+    color 0.4s ease, 
+    box-shadow 0.4s ease, 
+    transform 0.3s ease;
+}
+
+.btn-border:hover {
+  background-color: #1C0438; 
+  color: #E20BB3; 
+  box-shadow: 0 0 15px #E20BB3, 0 0 25px #7C0662;
+  transform: scale(1.05);
+}
+
+.btn-border:active {
+  transform: scale(0.95); 
+  box-shadow: none; 
+  background-color: #180327; 
+}
+
+/* Initial state */
+.fadeInUp {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Delay animation for each element */
+.fadeInUp:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.fadeInUp:nth-child(2) {
+  animation-delay: 0.5s;
+}
+.fadeInUp:nth-child(3) {
+  animation-delay: 0.7s;
+}
+.fadeInUp:nth-child(4) {
+  animation-delay: 1s;
+}
+
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.custom-table {
+  border-collapse: collapse;
+  background-color: rgba(30, 30, 47, 0.9); /* dark semi-transparent */
+  color: #fff;
+  border: solid 3px #E20BB3;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(128, 0, 128, 0.3);
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #444;
+}
+
+.custom-table thead {
+  background-color: rgba(46, 46, 66, 0.95);
+  color: #bfaaff;
+}
+
+.custom-table tbody tr:hover {
+  background-color: rgba(47, 47, 79, 0.8);
+  transition: background-color 0.3s;
+}
+
